@@ -1,0 +1,156 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:local="clr-namespace:WpfApp1"
+        Title="MainWindow" Height="600" Width="850" WindowStartupLocation="CenterScreen" WindowStyle="None"
+        AllowsTransparency="True" Background="Transparent" >
+    <Window.DataContext>
+        <local:MainWindowVM/>
+    </Window.DataContext>
+
+    <Border Background="White" CornerRadius="30 30 30 30" BorderBrush="Transparent" BorderThickness="0" MouseDown="Border_MouseDown" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+
+                <RowDefinition Height="100"/>
+
+
+            </Grid.RowDefinitions>
+            <Border BorderThickness="6" BorderBrush="LightBlue"  Grid.Row="3" CornerRadius="30 30 30 30" Background="#30495f">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="0.9" Opacity="0.3" BlurRadius="3" Direction="0"/>
+                </Border.Effect>
+            <Grid  Grid.Row="3">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="250"/>
+                </Grid.ColumnDefinitions>
+                
+                <Button  Command="{Binding AddStudentCommand}" Grid.Column="0" Style="{StaticResource grideditbutton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Icon:PackIconMaterial Height="20" Width="20" Kind="AccountArrowRight"  Style="{StaticResource gridbuttonIcon}"/>
+                        <TextBlock Padding="10 2 5 0" Text="ADD"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Command="{Binding EditStudentCommand}" Grid.Column="1" Style="{StaticResource grideditbutton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Icon:PackIconMaterial Width="16" Height="16" Kind="PencilOutline"  Style="{StaticResource gridbuttonIcon}"/>
+                        <TextBlock Padding="10 0 5 0" Text="EDIT"/>
+                    </StackPanel>
+                </Button>
+                
+                
+                <Button Grid.Column="2" Command="{Binding DeleteStudentCommand}"  CommandParameter="{Binding SelectedStudent}" Style="{StaticResource griddeletebutton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Icon:PackIconMaterial Height="20" Kind="DeleteOutline" Style="{StaticResource gridbuttonIcon}"/>
+                        <TextBlock Padding="10 3 5 0" Text="DELETE"/>
+                    </StackPanel>
+                </Button>
+
+
+                <Button Command="{Binding CloseCommand}" Grid.Column="4" Style="{StaticResource closeButton}" Margin="70,0,30,0">
+                    <StackPanel Orientation="Horizontal">
+                        <Icon:PackIconMaterial Kind="close"  Style="{StaticResource gridbuttonIcon}"/>
+                        <TextBlock Padding="10 0 5 0" Text="CLOSE"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+
+            </Border>
+
+
+            <Grid>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                
+                
+                <Border BorderBrush="Transparent" Grid.Column="1" CornerRadius="0 0 50 50" Background="#30495f">
+                    <TextBlock Text="Registration System" 
+                               VerticalAlignment="Center" 
+                               FontSize="30"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               HorizontalAlignment="Center"/>
+
+                </Border>
+
+                <Border Grid.Column="2" CornerRadius="0 30 0 0" Background="#30495f">
+                  
+
+                </Border>
+                <Border BorderBrush="Transparent" Grid.Column="2" CornerRadius="30 30 0 0" Background="White">
+
+
+                </Border>
+                <Border Grid.Column="0" CornerRadius="30 0 0 0" Background="#30495f">
+
+
+                </Border>
+                <Border BorderBrush="Transparent" Grid.Column="0" CornerRadius="30 30 0 0" Background="White">
+
+
+                </Border>
+
+
+
+
+            </Grid>
+            <DataGrid SelectedValue="{Binding SelectedStudent,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Students,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}"  Grid.Row="1" x:Name="DataGrid">
+                <DataGrid.Columns>
+                    
+                    <DataGridTemplateColumn Header="Profile Picture" IsReadOnly="True" Width="*" >
+                       
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+
+                                <Border HorizontalAlignment="Center" BorderThickness="3"  CornerRadius="25"
+                                        
+                        VerticalAlignment="Center"            
+                        BorderBrush="#30495f">
+
+
+                                    <Grid>
+                                        <Border   Name="Mask" Background="White"  CornerRadius="25">
+                                        </Border>
+                                        <StackPanel>
+                                            <Image Source="{Binding Image}" Height="50" Width="50" />
+
+                                            <StackPanel.OpacityMask>
+                                                <VisualBrush Visual="{Binding ElementName=Mask}" />
+                                            </StackPanel.OpacityMask>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+
+
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="First name" IsReadOnly="True" Width="*" Binding="{Binding FirstName }" />
+                    <DataGridTextColumn Header="Last Name" IsReadOnly="True" Width="*"  Binding="{Binding LastName }"/>
+                    <DataGridTextColumn Header="Age" IsReadOnly="True" Width="*" Binding="{Binding Age}"/>
+                    <DataGridTextColumn Header="GPA" IsReadOnly="True" Width="*" Binding="{Binding GPA}"/>
+
+                </DataGrid.Columns>
+            </DataGrid>
+          
+        </Grid>
+        
+        
+    </Border>
+
+   
+
+</Window>
